@@ -4,18 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager_MVC.Models;
 using EmployeeManager_MVC.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace EmployeeManager_MVC
 {
     public class Startup
     {
+       
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,15 +32,7 @@ namespace EmployeeManager_MVC
         {
             services.AddControllersWithViews();
 
-            /*services.AddDbContext<AppDbContext>(
-             options => options.UseSqlServer
-             (this.config.GetConnectionString("AppDbContext")));*/
-
-           services.AddDbContext<AppDbContext>(options =>
-           options.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
-
-            services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
 
         }
 

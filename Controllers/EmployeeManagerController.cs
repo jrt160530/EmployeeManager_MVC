@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager_MVC.Models;
+using EmployeeManager_MVC.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
@@ -13,7 +14,7 @@ namespace EmployeeManager_MVC.Controllers
     public class EmployeeManagerController : Controller
     {
         private AppDbContext _dbcontext = null;
-        
+
         public EmployeeManagerController(AppDbContext dbcontext)
         {
             _dbcontext = dbcontext;
@@ -29,7 +30,7 @@ namespace EmployeeManager_MVC.Controllers
             List<Employee> employees = (from e in _dbcontext.Employees
                                         orderby e.LastName ascending
                                         select e).ToList();
-            return View(employees);        
+            return View(employees);
         }
 
         public IActionResult Insert()
@@ -42,7 +43,7 @@ namespace EmployeeManager_MVC.Controllers
         public IActionResult Insert(Employee model)
         {
             FillCountries();
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _dbcontext.Employees.Add(model);
                 _dbcontext.SaveChanges();
@@ -55,7 +56,7 @@ namespace EmployeeManager_MVC.Controllers
         public IActionResult Update(Employee model)
         {
             FillCountries();
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _dbcontext.Employees.Update(model);
                 _dbcontext.SaveChanges();
@@ -89,10 +90,10 @@ namespace EmployeeManager_MVC.Controllers
 
         private void FillCountries()
         {
-            List<SelectListItem> countries = (from c in _dbcontext.Countries 
-                                              orderby c.Name ascending 
+            List<SelectListItem> countries = (from c in _dbcontext.Countries
+                                              orderby c.Name ascending
                                               select new SelectListItem()
-            { Text = c.Name, Value = c.Name }).ToList();
+                                              { Text = c.Name, Value = c.Name }).ToList();
             ViewBag.Countries = countries;
         }
     }
