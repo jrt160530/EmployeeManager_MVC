@@ -39,7 +39,7 @@ namespace EmployeeManager_MVC.Models
         [Column("BirthDate")]
         [Display(Name ="Birthdate")]
         [Required(ErrorMessage = " Birthdate is required")]
-        public DateTime BirthData { get; set; }
+        public DateTime BirthDate { get; set; }
 
         [Column("HireDate")]
         [Display(Name ="Hire Date")]
