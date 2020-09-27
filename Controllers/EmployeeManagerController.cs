@@ -79,8 +79,10 @@ namespace EmployeeManager_MVC.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult Delete(int employeeID)
         {
+           // Employee model = employee;
             Employee model = _dbcontext.Employees.Find(employeeID);
             _dbcontext.Employees.Remove(model);
             _dbcontext.SaveChanges();

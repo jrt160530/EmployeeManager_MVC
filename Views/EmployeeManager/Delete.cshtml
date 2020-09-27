@@ -28,7 +28,62 @@
                 @Model.FirstName
             </td>
         </tr>
-        ...
+        <tr>
+        <td class="right">
+            <label asp-for="LastName"></label>
+        </td>
+        <td>
+            <input type="text" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="message"></span>
+        </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label asp-for="Title"></label>
+            </td>
+            <td>
+                <input type="text" asp-for="Title" />
+                <span asp-validation-for="Title" class="message"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label asp-for="BirthDate"></label>
+            </td>
+            <td>
+                <input type="date" asp-for="BirthDate" />
+                <span asp-validation-for="BirthDate" class="message"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class=" = right">
+                <label asp-for="HireDate"></label>
+            </td>
+            <td>
+                <input type="datetime" asp-for="HireDate" />
+                <span asp-validation-for="HireDate" class="message"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label asp-for="Country"></label>
+            </td>
+            <td>
+                <select asp-for="Country" asp-items="@ViewBag.Countries">
+                    <option value="">Please select</option>
+                </select>
+                <span asp-validation-for="Country" class="message"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label asp-for="Notes"></label> :
+            </td>
+            <td>
+                <textarea asp-for="Notes" rows="5" cols="40"></textarea>
+                <span asp-validation-for="Notes" class="message"></span>
+            </td>
+        </tr>
         <tr>
             <td colspan="2">
                 <button type="submit">Delete</button>
