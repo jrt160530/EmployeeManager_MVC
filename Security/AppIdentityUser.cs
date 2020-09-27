@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManager_MVC.Security
 {
-    public class AppIdentityUser
+    public class AppIdentityUser : IdentityUser
     {
+        // Username and Email provided by Identity.
+        // Add custom details here.
+        public string FullName { get; set; }
+        public DateTime BirthDate { get; set; }
     }
 }
