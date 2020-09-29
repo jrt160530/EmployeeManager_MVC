@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeManager_MVC.Controllers
 {
+    [Authorize(Roles ="Manager")]
     public class EmployeeManagerController : Controller
     {
         private AppDbContext _dbcontext = null;
@@ -25,6 +27,10 @@ namespace EmployeeManager_MVC.Controllers
             return View();
         }
 
+        // can also set the Authorize attribute for individual methods.
+        // also can set [AllowAnonymous] to give unauthorized access 
+        // to indivudal methods in cases the class is authorized attributed.
+        // [Authorize(Roles="Manager")]
         public IActionResult List()
         {
             List<Employee> employees = (from e in _dbcontext.Employees
@@ -40,6 +46,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Insert(Employee model)
         {
             FillCountries();
@@ -53,6 +60,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Update(Employee model)
         {
             FillCountries();
@@ -80,6 +88,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int employeeID)
         {
            // Employee model = employee;

@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
-    <script src="~/Scripts/jquery.js"></script>
+    <!--<script src="~/Scripts/jquery.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>-->
 
 </head>
 <body>
@@ -22,6 +22,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -42,6 +43,26 @@
             @RenderBody()
         </main>
     </div>
+
+    <hr />
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h2>You are signed in as @User.Identity.Name</h2>
+        <form asp-controller="Security" asp-action="SignOut" method="post">
+            <button type="reset">Sign Out</button>
+        </form>
+    }
+    else
+    {
+        <h2>You are not signed in</h2>
+        <a asp-controller="Security"
+           asp-action="Register"
+           class="linkbutton">Register</a>
+        <a asp-controller="Security"
+           asp-action="SignIn"
+           class="linkbutton">Sign In</a>
+        
+    }
 
     <footer class="border-top footer text-muted">
         <div class="container">

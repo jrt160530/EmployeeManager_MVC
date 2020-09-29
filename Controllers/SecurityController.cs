@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager_MVC.Models;
 using EmployeeManager_MVC.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -26,11 +27,6 @@ namespace EmployeeManager_MVC.Controllers
             this.signinManager = signinManager;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         // First Register() is called when "create new account link" is clicked from sign in page.
         // It displays a blank user registration page.
         public IActionResult Register()
@@ -42,6 +38,7 @@ namespace EmployeeManager_MVC.Controllers
         // entering the details and clicking the Create button.
         // It receices a Register obj through model binding.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Register(Register obj)
         {
             // If model contains valid values
@@ -63,6 +60,7 @@ namespace EmployeeManager_MVC.Controllers
                 user.BirthDate = obj.BirthDate;
 
                 IdentityResult result = userManager.CreateAsync(user, obj.Password).Result;
+
 
                 if (result.Succeeded)
                 {
@@ -86,30 +84,40 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SignIn(SignIn obj)
         {
-             if (ModelState.IsValid)
-               {
-            var result = signinManager.PasswordSignInAsync
-                (obj.UserName, obj.Password, obj.RememberMe, false).Result;
-            //var result = signinManager.PasswordSignInAsync(
-            //obj.UserName, obj.Password, obj.RememberMe).Result;
 
-            if (result.Succeeded)
+            if (ModelState.IsValid)
+            {
+                var result = signinManager.PasswordSignInAsync
+                (obj.UserName, obj.Password,
+                    obj.RememberMe, false).Result;
+
+                if (result.Succeeded)
                 {
+                    Console.WriteLine("success");
                     return RedirectToAction("List", "EmployeeManager");
-                 }
+                }
                 else
                 {
-                ModelState.AddModelError("", " InvalidCastException user details");
+                    ModelState.AddModelError("", "Invalid user details");
                 }
             }
+            return View(obj);
 
-        return View(obj);
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult SignOut()
+        {
+            signinManager.SignOutAsync().Wait();
+            return RedirectToAction("SignIn", "Security");
+        }
+
+        public IActionResult AccessDenied()
         {
             return View();
         }
