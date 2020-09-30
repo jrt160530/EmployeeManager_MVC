@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeManager_MVC.Controllers
 {
-    [Authorize(Roles ="Manager")]
+    
+    [Authorize]
     public class EmployeeManagerController : Controller
     {
         private AppDbContext _dbcontext = null;
@@ -46,7 +47,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Manager")]
         public IActionResult Insert(Employee model)
         {
             FillCountries();
@@ -60,7 +61,6 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Update(Employee model)
         {
             FillCountries();
@@ -88,7 +88,6 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Delete(int employeeID)
         {
            // Employee model = employee;
