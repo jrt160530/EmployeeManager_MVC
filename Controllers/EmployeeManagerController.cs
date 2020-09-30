@@ -40,6 +40,7 @@ namespace EmployeeManager_MVC.Controllers
             return View(employees);
         }
 
+        [Authorize(Roles = "Manager")]
         public IActionResult Insert()
         {
             FillCountries();
@@ -47,6 +48,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles ="Manager")]
         public IActionResult Insert(Employee model)
         {
@@ -57,10 +59,12 @@ namespace EmployeeManager_MVC.Controllers
                 _dbcontext.SaveChanges();
                 ViewBag.Message = "Employee inserted successfully";
             }
-            return View(model);
+            return RedirectToAction("List");
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager")]
         public IActionResult Update(Employee model)
         {
             FillCountries();
@@ -73,6 +77,7 @@ namespace EmployeeManager_MVC.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public IActionResult Update(int id)
         {
             FillCountries();
@@ -81,6 +86,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [ActionName("Delete")]
+        [Authorize(Roles = "Manager")]
         public IActionResult ConfirmDelete(int id)
         {
             Employee model = _dbcontext.Employees.Find(id);
@@ -88,6 +94,8 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager")]
         public IActionResult Delete(int employeeID)
         {
            // Employee model = employee;

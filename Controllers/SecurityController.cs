@@ -38,6 +38,7 @@ namespace EmployeeManager_MVC.Controllers
         // entering the details and clicking the Create button.
         // It receices a Register obj through model binding.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Register(Register obj)
         {
             // If model contains valid values
@@ -83,6 +84,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SignIn(SignIn obj)
         {
 
@@ -107,6 +109,7 @@ namespace EmployeeManager_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public IActionResult SignOut()
         {
