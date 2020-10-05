@@ -1,0 +1,1 @@
+Developed using ASP.NET Core MVC. Entity Framework Core and localdb used. The EF Core model was built manually by creating POCOs and mapping them to a table schema. Data annotation attributes are used for mapping and model validations. Authentication and authorication is provided using ASP.NET Core Identity. Tag helpers utilized to render HTML form and form fields.

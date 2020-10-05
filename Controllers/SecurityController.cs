@@ -18,6 +18,7 @@ namespace EmployeeManager_MVC.Controllers
         private readonly RoleManager<AppIdentityRole> roleManager;
         private readonly SignInManager<AppIdentityUser> signinManager;
 
+       
         public SecurityController(UserManager<AppIdentityUser> userManager,
             RoleManager<AppIdentityRole> roleManager,
             SignInManager<AppIdentityUser> signinManager)

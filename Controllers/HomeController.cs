@@ -9,6 +9,7 @@ using EmployeeManager_MVC.Models;
 
 namespace EmployeeManager_MVC.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
